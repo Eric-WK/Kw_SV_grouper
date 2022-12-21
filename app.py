@@ -90,6 +90,9 @@ process = st.button("Process File")
 if process:
     ## process the dataframe
     df_merged = process_dataframe(df)
+    ## add df_merged to session_state
+    if 'df_merged' not in st.session_state:
+        st.session_state.df_merged = df_merged
     ## convert the dataframe to excel
     df_excel = to_excel(df_merged)
     ## download the processed dataframe
@@ -97,6 +100,11 @@ if process:
     ## save the df_excel to a session_state
     if 'df_excel' not in st.session_state:
         st.session_state.df_excel = df_excel
+
+## show a button to preview the dataframe 
+if 'df_excel' in st.session_state:
+    if st.button("Preview Processed File"):
+        st.dataframe(st.session_state.df_merged)
 
 ## download button: 
 if 'df_excel' in st.session_state:
